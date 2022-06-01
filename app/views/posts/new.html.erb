@@ -1,0 +1,24 @@
+<h1>Posts#new</h1>
+<p>Find me in app/views/posts/new.html.erb</p>
+
+<div class="container">
+  <%= form_with model: @post do |form| %>
+
+    <!-- TITLE -->
+    <div class="field">
+      <%= form.label :title, 'Title' %>
+      <%= form.text_field :title, class: "form-control", placeholder: "The Title of your post." %>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="field">
+      <%= form.label :content, 'Content' %>
+      <%= form.text_area :content, class: "form-control", placeholder: "Write you post here." %>
+    </div><br>
+
+    <hr>
+    <div class="actions text-center p-3">
+      <%= form.submit "Create", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,7 @@
+<%= form_with(model: @user) do |form| %>
+  <%= form.text_field :email %><br>
+  <%= form.collection_check_boxes :role_ids, Role.all, :id, :name %><br>
+    <%= @user.errors[:roles] %><br>
+  <%= form.button :submit %><br>
+<% end %>
+

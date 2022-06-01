@@ -1,0 +1,72 @@
+<h1>Pages#home</h1>
+<p>Find me in app/views/pages/home.html.erb</p>
+
+<% if current_user %>
+  <% if false %>
+    <p>Hello <%= current_user.email %> ! </p>
+    <p>You are a [<%= current_user.role %>]</p>
+    <% if current_user.admin? %>
+      There are now <%= User.count %> users in the system.
+    <% end %>
+  <% end %>
+  <p> Are you admin ? <%= has_role?("admin") %></p>
+  <p> Your roles : <%= current_user.roles.pluck(:name) %></p>
+  <p>
+    You have successfully authenticated with your Devise account.
+    You are now ready to interact with this application.
+  </p>
+  <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+<% else %>
+  <p>You are not signed in.</p>
+  <%= link_to "Sign Up!", new_user_registration_path %>
+  <br />
+  <%= link_to "Login", new_user_session_path %>
+<% end %>
+
+<br>
+<br>
+
+<div class="table-responsive">
+  <table class="table text-left">
+    <thead>
+      <tr class="text-left">
+        <th>#</th>
+        <th>Title</th>
+        <th>Content extract</th>
+        <th>Author email</th>
+        <th>Actions</th>
+        <th>Creation datetime</th>
+        <th>Modification datetime</th>
+      </tr>
+    </thead>
+    <tbody class="text-left">
+      <% if @posts.count > 0 %>
+        <% @posts.each do |post| %>
+          <tr>
+            <td><%= post.id %></td>
+            <td><%= post.title %></td>
+            <td><%= post.content %></td>
+            <td><%= post.user.email %></td>
+            <td>
+              <% if post.user.id == current_user.id || has_role?("admin") %>
+                <%= link_to "Edit", edit_post_path(id: post.id),  class: "btn btn-outline-danger btn-sm" %>
+                <%= link_to "Delete", post_path(id: post.id), data: { confirm: "Are you sure you want to delete this post ?" }, method: "delete", class: "btn btn-outline-danger btn-sm" %>
+              <% end %>
+            </td>
+            <td><%= post.created_at %></td>
+            <td><%= post.updated_at %></td>
+          </tr>
+        <% end%>
+      <% else %>
+        No post to view
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<% if user_signed_in? %>
+  <%= link_to "Create a post", new_post_path %>
+<% else %>
+  <p>You cannot create a new post, you have to signed in.</p>
+<% end %>

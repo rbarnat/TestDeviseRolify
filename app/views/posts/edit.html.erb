@@ -1,0 +1,24 @@
+<h1>Posts#edit</h1>
+<p>Find me in app/views/posts/edit.html.erb</p>
+
+<div class="container">
+  <%= form_with model: @post, url: post_path(@post), method: :patch  do |form| %>
+
+    <!-- TITLE -->
+    <div class="field">
+      <%= form.label :title, 'Title' %>
+      <%= form.text_field :title, class: "form-control", placeholder: "The Title of your post.", autocomplete: "title" %>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="field">
+      <%= form.label :content, 'Content' %>
+      <%= form.text_area :content, class: "form-control", placeholder: "Write you post here.", autocomplete: "content" %>
+    </div><br>
+
+    <hr>
+    <div class="actions text-center p-3">
+      <%= form.submit "Modify", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
